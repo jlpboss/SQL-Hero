@@ -116,7 +116,7 @@ class Creater:
                 %s
         );
         """
-        data = (hero_name, hero_about_me, hero_bio)
+        data = (hero_name[0], hero_about_me, hero_bio)
 
         execute_modify(query, data)
 
@@ -139,7 +139,7 @@ class Creater:
                 (%s, %s, 1);
             """
             print(hero_id)
-            data = (hero_id, item, item, hero_id)
+            data = (hero_id[0], item, item, hero_id)
 
             execute_modify(query, data)
 
