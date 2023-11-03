@@ -44,7 +44,9 @@ class Creater:
             SELECT id FROM heroes
             """
             result2 = execute_query(query2)
-            all_hero_names = [result[0], result2[0]]
+            all_hero_names = [result, result2]
+
+            print(all_hero_names)
             
             hero_name = input("New Hero Name: ")
             hero_about_me = input("New Hero About Me: ")
@@ -64,9 +66,9 @@ class Creater:
                 friend = input("New Hero's Friend(Enter 'done' to finish): ")
                 if friend == "done":
                     done_with_friends = True
-                elif friend in all_hero_names[0]:
+                elif (friend, ) in all_hero_names[0]:
                     hero_friends[0].append(friend)
-                    hero_friends[1].append(all_hero_names.index(friend))
+                    hero_friends[1].append(all_hero_names[0].index((friend, )))
                 else:
                     print("Not a valid hero name")
             
@@ -76,9 +78,9 @@ class Creater:
                 enemy = input("New Hero's Enemy(Enter 'done' to finish): ")
                 if enemy == "done":
                     done_with_enemies = True
-                elif enemy in all_hero_names[0]:
+                elif (enemy, ) in all_hero_names[0]:
                     hero_enemies[0].append(enemy)
-                    hero_enemies[1].append(all_hero_names.index(enemy))
+                    hero_enemies[1].append(all_hero_names[0].index((enemy, )))
 
             hero_bio = input("New Hero Biography: ")
 
@@ -121,8 +123,8 @@ class Creater:
         query = """
         SELECT id FROM heroes WHERE name = %s AND about_me = %s;
         """
-        data = (hero_name, hero_about_me)
-
+        data = (hero_name[0], hero_about_me)
+        # this is where it is borken
         hero_id = execute_query(query, data)
 
         for item in hero_friends[1]:
@@ -136,6 +138,7 @@ class Creater:
             VALUES
                 (%s, %s, 1);
             """
+            print(hero_id)
             data = (hero_id, item, item, hero_id)
 
             execute_modify(query, data)
